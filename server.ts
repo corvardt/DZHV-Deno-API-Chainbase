@@ -134,6 +134,7 @@ const Fetch = async () => {
 
     const time = Date.now() - timer;
     console.log(
+      Date.now(),
     );
     console.log("accomplished")
     console.log(time / 1000,"seconds")
@@ -150,10 +151,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
