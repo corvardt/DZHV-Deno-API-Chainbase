@@ -103,20 +103,23 @@ const Fetch = async () => {
     console.log("_____________________________________");
     console.log("");
     // set kvs
-    await kv.set(["daily-holders"], {
-      eth: EthData[0],
-      arb: ArbData[0],
-      avax: AvaxData[0],
-      base: BaseData[0],
-      bsc: BscData[0],
+    await kv.set(["chiffres"], {
+      holders:{
+        eth: EthData[0],
+        arb: ArbData[0],
+        avax: AvaxData[0],
+        base: BaseData[0],
+        bsc: BscData[0],
+      },
+      transfer:{
+        eth: EthData[1],
+        arb: ArbData[1],
+        avax: AvaxData[1],
+        base: BaseData[1],
+        bsc: BscData[1],
+      }
     });
-    await kv.set(["daily-transfers"], {
-      eth: EthData[1],
-      arb: ArbData[1],
-      avax: AvaxData[1],
-      base: BaseData[1],
-      bsc: BscData[1],
-    });
+
     const time = Date.now() - timer;
     console.log(" ",
       Date.now(),
@@ -136,10 +139,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
@@ -148,11 +151,8 @@ const getDataByPrefix = async (ctx, prefix) => {
   const data = result.value
   return (ctx.response.body = data);
 };
-router.get("/v1/holders", async (ctx) =>
-  getDataByPrefix(ctx, "daily-holders")
-);
-router.get("/v1/transfers", async (ctx) =>
-  getDataByPrefix(ctx, "daily-transfers")
+router.get("/v1/chiffres", async (ctx) =>
+  getDataByPrefix(ctx, "chiffres")
 );
 app.use(router.routes());
 app.use(router.allowedMethods());
