@@ -136,16 +136,15 @@ const Fetch = async () => {
   }
 };
 
-// Deno.cron("Run every hour", "0 */1 * * *", () => {
+Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+  Fetch();
+});
 
-// });
-Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
 const getDataByPrefix = async (ctx, prefix) => {
   const result = await kv.get([prefix]);
-  console.log(result.value);
   const data = result.value
   return (ctx.response.body = data);
 };
