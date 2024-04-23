@@ -62,20 +62,11 @@ const Fetch = async () => {
       totaltries += 1;
       console.log("......", tries);
       BscData = await Bsc();
-    }
+    }   
+    tries = 0;
     console.log("....done");
     console.log("__________________________________________________________");
     console.log("");
-    tries = 0;
-    const time = Date.now() - timer;
-    console.log(
-      Date.now(),
-      "task done in",
-      time / 1000,
-      "seconds with",
-      totaltries,
-      "retries"
-    );
     // set kvs
     await kv.set(["daily-holders"], {
       eth: EthData[0],
@@ -92,6 +83,15 @@ const Fetch = async () => {
       bsc: BscData[1],
     });
     console.log("kv writes done");
+    const time = Date.now() - timer;
+    console.log(
+      Date.now(),
+      "task done in",
+      time / 1000,
+      "seconds with",
+      totaltries,
+      "retries"
+    );
     console.log("__________________________________________________________");
   } catch (error) {
     const timestamp = Date.now();
@@ -100,10 +100,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every hour", "0 */1 * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run every hour", "0 */1 * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
