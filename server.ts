@@ -62,9 +62,7 @@ const Fetch = async () => {
       "retries"
     );
     // set kvs
-    const timestamp = Date.now();
-    await kv.set(["daily-holders", timestamp], {
-      timestamp: timestamp,
+    await kv.set(["daily-holders"], {
       holders: {
         eth: EthData[0],
         arb: ArbData[0],
@@ -73,8 +71,7 @@ const Fetch = async () => {
         bsc: BscData[0],
       },
     });
-    await kv.set(["daily-transfers", timestamp], {
-      timestamp: timestamp,
+    await kv.set(["daily-transfers"], {
       transfers: {
         eth: EthData[1],
         arb: ArbData[1],
@@ -91,7 +88,7 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every day at 6PM", "0 16 * * *", () => {
+Deno.cron("Run once a minute", "* * * * *", () => {
   Fetch();
 });
 
