@@ -76,17 +76,17 @@ const Fetch = async () => {
         bsc: BscData[1],
       },
     });
-    console.log("done");
+    console.log("kv writes done");
   } catch (error) {
     const timestamp = Date.now();
     console.log(timestamp, ": error");
     console.error(error);
   }
 };
+Fetch();
+// Deno.cron("Run every day at 6PM", "0 18 * * *", () => {
 
-Deno.cron("Run every day at 6PM", "0 18 * * *", () => {
-  Fetch();
-});
+// });
 
 const app = new Application();
 const router = new Router();
