@@ -89,7 +89,7 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+Deno.cron("Run every hour", "0 */1 * * *", () => {
   Fetch();
 });
 const app = new Application();
