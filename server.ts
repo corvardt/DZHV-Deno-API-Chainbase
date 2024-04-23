@@ -27,7 +27,7 @@ const Fetch = async () => {
     }
     tries = 0;
     const ethElapsed = Date.now() - timereth2;
-    console.log("....done",ethElapsed/1000,"s");
+    console.log("--",ethElapsed/1000,"s");
 
     // arb
     console.log("________");
@@ -45,7 +45,7 @@ const Fetch = async () => {
     }
     tries = 0;
     const arbElapsed = Date.now() - timerarb2;
-    console.log("....done",arbElapsed/1000,"s");
+    console.log("--",arbElapsed/1000,"s");
 
     // avax
     console.log("________");
@@ -63,7 +63,7 @@ const Fetch = async () => {
     }
     tries = 0;
     const avaxElapsed = Date.now() - timeravax2;
-    console.log("....done",avaxElapsed/1000,"s");
+    console.log("--",avaxElapsed/1000,"s");
 
     // base
     console.log("________");
@@ -81,7 +81,7 @@ const Fetch = async () => {
     }
     tries = 0;
     const baseElapsed = Date.now() - timerbase2;
-    console.log("....done",baseElapsed/1000,"s");
+    console.log("--",baseElapsed/1000,"s");
 
     // bsc
     console.log("________");
@@ -99,7 +99,7 @@ const Fetch = async () => {
     }   
     tries = 0;
     const bscElapsed = Date.now() - timerbsc2;
-    console.log("....done",bscElapsed/1000,"s");
+    console.log("--",bscElapsed/1000,"s");
     console.log("_____________________________________");
     console.log("");
     // set kvs
@@ -136,10 +136,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
