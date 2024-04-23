@@ -8,49 +8,64 @@ let timer = 0;
 const Fetch = async () => {
   timer = Date.now();
   try {
+    console.log("starting");
+    console.log("fetch...");
+    console.log("________");
+    console.log("Ethereum");
     let EthData = await Eth();
     while (EthData[0] == undefined || EthData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("1/5...retrying ", tries);
+      console.log("......", tries);
       EthData = await Eth();
     }
     tries = 0;
-    console.log("1/5 done");
+    console.log("....done");
+    console.log("________");
+    console.log("Arbitrum");
     let ArbData = await Arb();
     while (ArbData[0] == undefined || ArbData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("2/5...retrying", tries);
+      console.log("......", tries);
       ArbData = await Arb();
     }
     tries = 0;
-    console.log("2/5 done");
+    console.log("....done");
+    console.log("________");
+    console.log("Avalanche");
     let AvaxData = await Avax();
     while (AvaxData[0] == undefined || AvaxData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("3/5...retrying", tries);
+      console.log("......", tries);
       AvaxData = await Avax();
     }
     tries = 0;
-    console.log("3/5 done");
+    console.log("....done");
+    console.log("________");
+    console.log("Base Chain");
     let BaseData = await Base();
     while (BaseData[0] == undefined || BaseData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("4/5...retrying", tries);
+      console.log("......", tries);
       BaseData = await Base();
     }
     tries = 0;
-    console.log("4/5 done");
+    console.log("....done");
+    console.log("________");
+    console.log("Binance");
     let BscData = await Bsc();
     while (BscData[0] == undefined || BscData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("5/5...retrying", tries);
+      console.log("......", tries);
       BscData = await Bsc();
     }
+    console.log("....done");
+    console.log("__________________________________________________________");
+    console.log("");
     tries = 0;
     const time = Date.now() - timer;
     console.log(
@@ -61,27 +76,23 @@ const Fetch = async () => {
       totaltries,
       "retries"
     );
-    const _data = [];
     // set kvs
     await kv.set(["daily-holders"], {
-
-        eth: EthData[0],
-        arb: ArbData[0],
-        avax: AvaxData[0],
-        base: BaseData[0],
-        bsc: BscData[0],
-
+      eth: EthData[0],
+      arb: ArbData[0],
+      avax: AvaxData[0],
+      base: BaseData[0],
+      bsc: BscData[0],
     });
     await kv.set(["daily-transfers"], {
-
-        eth: EthData[1],
-        arb: ArbData[1],
-        avax: AvaxData[1],
-        base: BaseData[1],
-        bsc: BscData[1],
-
+      eth: EthData[1],
+      arb: ArbData[1],
+      avax: AvaxData[1],
+      base: BaseData[1],
+      bsc: BscData[1],
     });
     console.log("kv writes done");
+    console.log("__________________________________________________________");
   } catch (error) {
     const timestamp = Date.now();
     console.log(timestamp, ": error");
@@ -92,6 +103,7 @@ const Fetch = async () => {
 Deno.cron("Run every hour", "0 */1 * * *", () => {
   Fetch();
 });
+
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
@@ -101,7 +113,7 @@ const getDataByPrefix = async (ctx, prefix) => {
   for await (const { value } of result) {
     _data.push(value);
   }
-  console.log(_data[0])
+  console.log(_data[0]);
   return (ctx.response.body = _data[0]);
 };
 router.get("/v1/daily/holders", async (ctx) =>
