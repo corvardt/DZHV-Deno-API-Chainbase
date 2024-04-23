@@ -99,10 +99,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run every hour", "0 */1 * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run every hour", "0 */1 * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
@@ -112,7 +112,6 @@ const getDataByPrefix = async (ctx, prefix) => {
   for await (const { value } of result) {
     _data.push(value);
   }
-  console.log(_data[0]);
   return (ctx.response.body = _data[0]);
 };
 router.get("/v1/daily/holders", async (ctx) =>
