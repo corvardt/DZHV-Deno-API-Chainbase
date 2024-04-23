@@ -29,12 +29,12 @@ const Fetch = async () => {
       EthData = await Eth();
       const time = Date.now() - timereth;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
-      await delay(100);
+      await delay(10);
       timereth = Date.now();
     }
     tries = 0;
     const ethElapsed = Date.now() - timereth2;
-    console.log("--",ethElapsed/500,"s");
+    console.log("--",ethElapsed/1000,"s");
 
     // arb
     console.log("________");
@@ -48,12 +48,12 @@ const Fetch = async () => {
       ArbData = await Arb();
       const time = Date.now() - timerarb;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
-      await delay(100);
+      await delay(10);
       timerarb = Date.now();
     }
     tries = 0;
     const arbElapsed = Date.now() - timerarb2;
-    console.log("--",arbElapsed/500,"s");
+    console.log("--",arbElapsed/1000,"s");
 
     // avax
     console.log("________");
@@ -67,12 +67,12 @@ const Fetch = async () => {
       AvaxData = await Avax();
       const time = Date.now() - timeravax;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
-      await delay(100);
+      await delay(10);
       timeravax = Date.now();
     }
     tries = 0;
     const avaxElapsed = Date.now() - timeravax2;
-    console.log("--",avaxElapsed/500,"s");
+    console.log("--",avaxElapsed/1000,"s");
 
     // base
     console.log("________");
@@ -86,12 +86,12 @@ const Fetch = async () => {
       BaseData = await Base();
       const time = Date.now() - timerbase;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
-      await delay(100);
+      await delay(10);
       timerbase = Date.now();
     }
     tries = 0;
     const baseElapsed = Date.now() - timerbase2;
-    console.log("--",baseElapsed/500,"s");
+    console.log("--",baseElapsed/1000,"s");
 
     // bsc
     console.log("________");
@@ -105,12 +105,12 @@ const Fetch = async () => {
       BscData = await Bsc();
       const time = Date.now() - timerbsc;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
-      await delay(100);
+      await delay(10);
       timerbsc = Date.now();
     }   
     tries = 0;
     const bscElapsed = Date.now() - timerbsc2;
-    console.log("--",bscElapsed/500,"s");
+    console.log("--",bscElapsed/1000,"s");
     console.log("");
     console.log("=============");
 
@@ -151,10 +151,10 @@ const Fetch = async () => {
   }
 };
 
-// Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+  Fetch();
+});
 
-// });
-Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
