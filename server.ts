@@ -89,10 +89,10 @@ const Fetch = async () => {
   }
 };
 
-Deno.cron("Run once a minute", "* * * * *", () => {
-  Fetch();
-});
+// Deno.cron("Run once a minute", "* * * * *", () => {
 
+// });
+Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
