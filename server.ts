@@ -145,13 +145,14 @@ const router = new Router();
 app.use(oakCors());
 const getDataByPrefix = async (ctx, prefix) => {
   const result = await kv.get([prefix]);
-  const [data] = result.value
+  console.log(result.value);
+  const data = result.value
   return (ctx.response.body = data);
 };
-router.get("/v1/daily/holders", async (ctx) =>
+router.get("/v1/holders", async (ctx) =>
   getDataByPrefix(ctx, "daily-holders")
 );
-router.get("/v1/daily/transfers", async (ctx) =>
+router.get("/v1/transfers", async (ctx) =>
   getDataByPrefix(ctx, "daily-transfers")
 );
 app.use(router.routes());
