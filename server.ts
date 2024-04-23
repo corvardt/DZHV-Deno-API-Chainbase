@@ -63,7 +63,7 @@ const Fetch = async () => {
     );
     const _data = [];
     // set kvs
-    await kv.set("daily-holders", {
+    await kv.set(["daily-holders"], {
 
         eth: EthData[0],
         arb: ArbData[0],
@@ -72,7 +72,7 @@ const Fetch = async () => {
         bsc: BscData[0],
 
     });
-    await kv.set("daily-transfers", {
+    await kv.set(["daily-transfers"], {
 
         eth: EthData[1],
         arb: ArbData[1],
