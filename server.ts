@@ -111,7 +111,7 @@ const Fetch = async () => {
         base: BaseData[0],
         bsc: BscData[0],
       },
-      transfer:{
+      transfers:{
         eth: EthData[1],
         arb: ArbData[1],
         avax: AvaxData[1],
