@@ -5,6 +5,9 @@ const kv = await Deno.openKv();
 let tries = 0;
 let totaltries = 0;
 let timer = 0;
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
 const Fetch = async () => {
   timer = Date.now();
   try {
@@ -23,6 +26,7 @@ const Fetch = async () => {
       EthData = await Eth();
       const time = Date.now() - timereth;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      await delay(1000);
       timereth = Date.now();
     }
     tries = 0;
@@ -41,6 +45,7 @@ const Fetch = async () => {
       ArbData = await Arb();
       const time = Date.now() - timerarb;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      await delay(1000);
       timerarb = Date.now();
     }
     tries = 0;
@@ -59,6 +64,7 @@ const Fetch = async () => {
       AvaxData = await Avax();
       const time = Date.now() - timeravax;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      await delay(1000);
       timeravax = Date.now();
     }
     tries = 0;
@@ -77,6 +83,7 @@ const Fetch = async () => {
       BaseData = await Base();
       const time = Date.now() - timerbase;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      await delay(1000);
       timerbase = Date.now();
     }
     tries = 0;
@@ -95,6 +102,7 @@ const Fetch = async () => {
       BscData = await Bsc();
       const time = Date.now() - timerbsc;
       console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      await delay(1000);
       timerbsc = Date.now();
     }   
     tries = 0;
