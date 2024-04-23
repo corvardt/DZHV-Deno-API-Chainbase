@@ -8,64 +8,99 @@ let timer = 0;
 const Fetch = async () => {
   timer = Date.now();
   try {
-    console.log("starting");
-    console.log("fetch...");
+    // startup message
+    console.log("________");
+    console.log("fetching");
+    // eth
     console.log("________");
     console.log("Ethereum");
+    let timereth = Date.now();
+    let timereth2 = Date.now();
     let EthData = await Eth();
     while (EthData[0] == undefined || EthData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("......", tries);
       EthData = await Eth();
+      const time = Date.now() - timereth;
+      console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      timereth = Date.now();
     }
     tries = 0;
-    console.log("....done");
+    const ethElapsed = Date.now() - timereth2;
+    console.log("....done",ethElapsed/1000,"s");
+
+    // arb
     console.log("________");
     console.log("Arbitrum");
+    let timerarb = Date.now();
+    let timerarb2 = Date.now();
     let ArbData = await Arb();
     while (ArbData[0] == undefined || ArbData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("......", tries);
       ArbData = await Arb();
+      const time = Date.now() - timerarb;
+      console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      timerarb = Date.now();
     }
     tries = 0;
-    console.log("....done");
+    const arbElapsed = Date.now() - timerarb2;
+    console.log("....done",arbElapsed/1000,"s");
+
+    // avax
     console.log("________");
     console.log("Avalanche");
+    let timeravax = Date.now();
+    let timeravax2 = Date.now();
     let AvaxData = await Avax();
     while (AvaxData[0] == undefined || AvaxData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("......", tries);
       AvaxData = await Avax();
+      const time = Date.now() - timeravax;
+      console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      timeravax = Date.now();
     }
     tries = 0;
-    console.log("....done");
+    const avaxElapsed = Date.now() - timeravax2;
+    console.log("....done",avaxElapsed/1000,"s");
+
+    // base
     console.log("________");
     console.log("Base Chain");
+    let timerbase = Date.now();
+    let timerbase2 = Date.now();
     let BaseData = await Base();
     while (BaseData[0] == undefined || BaseData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("......", tries);
       BaseData = await Base();
+      const time = Date.now() - timerbase;
+      console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      timerbase = Date.now();
     }
     tries = 0;
-    console.log("....done");
+    const baseElapsed = Date.now() - timerbase2;
+    console.log("....done",baseElapsed/1000,"s");
+
+    // bsc
     console.log("________");
     console.log("Binance");
+    let timerbsc = Date.now();
+    let timerbsc2 = Date.now();
     let BscData = await Bsc();
     while (BscData[0] == undefined || BscData[1] == undefined) {
       tries += 1;
       totaltries += 1;
-      console.log("......", tries);
       BscData = await Bsc();
+      const time = Date.now() - timerbsc;
+      console.log(tries, "in", (time / 1000).toFixed(1),"s");
+      timerbsc = Date.now();
     }   
     tries = 0;
-    console.log("....done");
-    console.log("__________________________________________________________");
+    const bscElapsed = Date.now() - timerbsc2;
+    console.log("....done",bscElapsed/1000,"s");
+    console.log("_____________________________________");
     console.log("");
     // set kvs
     await kv.set(["daily-holders"], {
@@ -83,15 +118,17 @@ const Fetch = async () => {
       bsc: BscData[1],
     });
     const time = Date.now() - timer;
-    console.log(
+    console.log(" ",
       Date.now(),
-      "task: done in",
+      ": task accomplished"
+    );
+    console.log("  ",
       time / 1000,
       "seconds with",
       totaltries,
       "retries"
-    );
-    console.log("__________________________________________________________");
+    )
+    console.log("_____________________________________");
   } catch (error) {
     const timestamp = Date.now();
     console.log(timestamp, ": error");
@@ -107,12 +144,9 @@ const app = new Application();
 const router = new Router();
 app.use(oakCors());
 const getDataByPrefix = async (ctx, prefix) => {
-  const _data = [];
-  const result = await kv.list({ prefix: [prefix] });
-  for await (const { value } of result) {
-    _data.push(value);
-  }
-  return (ctx.response.body = _data[0]);
+  const result = await kv.get([prefix]);
+  const [data] = result.value
+  return (ctx.response.body = data);
 };
 router.get("/v1/daily/holders", async (ctx) =>
   getDataByPrefix(ctx, "daily-holders")
