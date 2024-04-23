@@ -61,24 +61,25 @@ const Fetch = async () => {
       totaltries,
       "retries"
     );
+    const _data = [];
     // set kvs
-    await kv.set(["daily-holders"], {
-      holders: {
+    await kv.set("daily-holders", {
+
         eth: EthData[0],
         arb: ArbData[0],
         avax: AvaxData[0],
         base: BaseData[0],
         bsc: BscData[0],
-      },
+
     });
-    await kv.set(["daily-transfers"], {
-      transfers: {
+    await kv.set("daily-transfers", {
+
         eth: EthData[1],
         arb: ArbData[1],
         avax: AvaxData[1],
         base: BaseData[1],
         bsc: BscData[1],
-      },
+
     });
     console.log("kv writes done");
   } catch (error) {
