@@ -136,10 +136,10 @@ const Fetch = async () => {
   }
 };
 
-// Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+Deno.cron("Run every twelve hours", "0 */12 * * *", () => {
+  Fetch();
+});
 
-// });
-Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
