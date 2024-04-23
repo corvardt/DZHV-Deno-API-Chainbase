@@ -97,11 +97,7 @@ const app = new Application();
 const router = new Router();
 app.use(oakCors());
 const getDataByPrefix = async (ctx, prefix) => {
-  const data = [];
-  const result = await kv.list({ prefix: [prefix] });
-  for await (const { value } of result) {
-    data.push(value);
-  }
+  const data = await kv.get({ prefix: [prefix] });
   return (ctx.response.body = data);
 };
 router.get("/v1/daily/holders", async (ctx) =>
