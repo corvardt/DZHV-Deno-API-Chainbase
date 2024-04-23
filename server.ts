@@ -82,11 +82,10 @@ const Fetch = async () => {
       base: BaseData[1],
       bsc: BscData[1],
     });
-    console.log("kv writes done");
     const time = Date.now() - timer;
     console.log(
       Date.now(),
-      "task done in",
+      "task: done in",
       time / 1000,
       "seconds with",
       totaltries,
@@ -100,10 +99,10 @@ const Fetch = async () => {
   }
 };
 
-// Deno.cron("Run every hour", "0 */1 * * *", () => {
+Deno.cron("Run every hour", "0 */1 * * *", () => {
+  Fetch();
+});
 
-// });
-Fetch();
 const app = new Application();
 const router = new Router();
 app.use(oakCors());
