@@ -4,7 +4,7 @@ import { Eth, Arb, Avax, Base, Bsc } from "./chainHandlers/mod.ts";
 const kv = await Deno.openKv();
 let tries = 0;
 let totaltries = 0;
-let timer = 0
+let timer = 0;
 const Fetch = async () => {
   timer = Date.now();
   try {
@@ -52,8 +52,15 @@ const Fetch = async () => {
       BscData = await Bsc();
     }
     tries = 0;
-    const time = Date.now() - timer
-    console.log(Date.now(),"task done in", time/1000, "seconds with", totaltries, "retries");
+    const time = Date.now() - timer;
+    console.log(
+      Date.now(),
+      "task done in",
+      time / 1000,
+      "seconds with",
+      totaltries,
+      "retries"
+    );
     // set kvs
     const timestamp = Date.now();
     await kv.set(["daily-holders", timestamp], {
@@ -83,10 +90,10 @@ const Fetch = async () => {
     console.error(error);
   }
 };
-Fetch();
-// Deno.cron("Run every day at 6PM", "0 18 * * *", () => {
 
-// });
+Deno.cron("Run every day at 6PM", "0 16 * * *", () => {
+  Fetch();
+});
 
 const app = new Application();
 const router = new Router();
